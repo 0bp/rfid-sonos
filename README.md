@@ -34,7 +34,7 @@ To test everything before running the systemd service, start the
 application manually:
 
 ```
-~/rfid-sonos.phar config run 
+~/rfid-sonos.phar run 
 ``` 
 
 If you scan a card that has not yet been assigned to a playlist 
