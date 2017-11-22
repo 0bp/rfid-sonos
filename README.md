@@ -4,6 +4,8 @@ An application to listen to keyboard inputs of a RFID reader to start
 playing playlist on Sonos speakers. Assign playlists to RFID cards and
 start playing music by scanning RFID cards.
 
+[Read the story behind](http://0xc2a0.com/001/avoiding-screen-devices.html)
+
 ## Requirements
 
 1. A Raspberry Pi with Network connectivity
