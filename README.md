@@ -61,3 +61,8 @@ WantedBy=multi-user.target
 Alias=rfid-sonos.service
 ```
 
+Start the service:
+```
+sudo service rfid-sonos start
+```
+
