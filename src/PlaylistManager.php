@@ -6,6 +6,7 @@ use bearonahill\Exception\MissingConfigException;
 use duncan3dc\Sonos\Network;
 use duncan3dc\Sonos\Tracks\TextToSpeech;
 use duncan3dc\Sonos\Directory;
+use duncan3dc\Sonos\Tracks\Stream;
 use Doctrine\Common\Cache\ArrayCache;
 use bearonahill\Database\PlaylistDatabase;
 use bearonahill\Exception\PlaylistNotFoundException;
@@ -49,12 +50,31 @@ class PlaylistManager
             return;
         }
 
-        if ($playlist !== null) {
-            $this->replacePlaylist($playlist);
+        if ($this->playlistIsAStream($playlist)) {
+            $this->startStream($playlist);
+            return;
         }
+
+        $this->startQueue($playlist);
     }
 
-    private function replacePlaylist(string $playlistName)
+    private function playlistIsAStream($playlist)
+    {
+        if (substr($playlist, 0, 18) === "x-sonosapi-stream:") {
+            return true;
+        }
+        return false;
+    }
+
+    private function startStream($uri)
+    {
+        $stream = new Stream($uri);
+        $this->controller->getQueue()->clear();
+        $this->controller->useStream($stream);
+        $this->controller->play();
+    }
+
+    private function startQueue(string $playlistName)
     {
         $playlist = $this->sonos->getPlaylistByName($playlistName);
         $tracks = $playlist->getTracks();
@@ -65,8 +85,14 @@ class PlaylistManager
             return;
         }
 
+        if ($this->controller->isStreaming()) {
+            $this->respondWithMessage('I was playing '.print_r($this->controller->getMediaInfo(), true));
+            $this->controller->useQueue();
+        }
+
         $this->controller->getQueue()->clear()->addTracks($tracks);
         $this->respondWithMessage('Added '.count($tracks).' to the playlist');
+
         $this->controller->play();
     }
 

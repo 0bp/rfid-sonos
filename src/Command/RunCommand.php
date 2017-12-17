@@ -35,6 +35,7 @@ class RunCommand extends Command
         $logger = new ConsoleLogger($output);
 
         $path = Filesystem::getBasePath();
+        $logger->debug('Using path '.$path);
         $database = PlaylistDatabase::fromPath($path.'/database.sqlite');
 
         $room = $database->getConfig('room');
