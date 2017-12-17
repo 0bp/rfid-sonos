@@ -86,7 +86,6 @@ class PlaylistManager
         }
 
         if ($this->controller->isStreaming()) {
-            $this->respondWithMessage('I was playing '.print_r($this->controller->getMediaInfo(), true));
             $this->controller->useQueue();
         }
 
