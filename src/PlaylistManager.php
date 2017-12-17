@@ -58,11 +58,29 @@ class PlaylistManager
         $this->startQueue($playlist);
     }
 
+    public function whatIsRunning()
+    {
+        if ($this->controller === null) {
+            $this->respondWithMessage('Room is not playing anything');
+            return;
+        }
+
+        $info = $this->controller->getMediaInfo();
+        foreach ($info as $key => $value) {
+            $this->respondWithMessage($key.': '.$value);
+        }
+    }
+
     private function playlistIsAStream($playlist)
     {
         if (substr($playlist, 0, 18) === "x-sonosapi-stream:") {
             return true;
         }
+
+        if (substr($playlist, 0, 17) === "x-sonosapi-radio:") {
+            return true;
+        }
+        
         return false;
     }
 

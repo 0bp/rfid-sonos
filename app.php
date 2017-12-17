@@ -10,7 +10,8 @@ require __DIR__ . '/vendor/autoload.php';
 use bearonahill\{
     Command\RunCommand,
     Command\ConfigCommand,
-    Command\AssignCommand
+    Command\AssignCommand,
+    Command\InfoCommand
 };
 
 use Symfony\Component\Console\Application;
@@ -19,5 +20,6 @@ $console = new Application('rfid-sonos');
 $console->add(new RunCommand());
 $console->add(new ConfigCommand());
 $console->add(new AssignCommand());
+$console->add(new InfoCommand());
 
 $console->run();
