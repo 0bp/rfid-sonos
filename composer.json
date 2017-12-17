@@ -3,7 +3,11 @@
         "symfony/console": "@stable",
         "symfony/stopwatch": "@stable",
         "duncan3dc/sonos": "^1.9",
-        "monolog/monolog": "^1.23"
+        "monolog/monolog": "^1.23",
+        "ext-soap": "*",
+        "ext-curl": "*",
+        "ext-sqlite3": "*",
+        "ext-dom": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.4"
